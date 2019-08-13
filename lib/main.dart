@@ -12,6 +12,16 @@ List<String> images = [
   "assets/image_01.png"
 ];
 
+//List<String> images = [
+//  "assets/image_07.jpg",
+//  "assets/image_06.jpg1",
+//  "assets/image_05.jpg1",
+//  "assets/image_04.jpg1",
+//  "assets/image_03.jpg1",
+//  "assets/image_02.jpg1",
+//  "assets/image_01.png1"
+//];
+
 List<String> titles = [
   "Hounted Ground",
   "Fallen In Love",
@@ -29,14 +39,15 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-var cardAspectRatio = 0.75;
-var widgetAspectRatio = 0.9;
-
 class _MyAppState extends State<MyApp> {
   var currentPageOffset = images.length - 1.0;
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
+    var height = width * 1.1;
+
     PageController controller = PageController(initialPage: images.length - 1);
     controller.addListener(() {
       setState(() {
@@ -49,7 +60,13 @@ class _MyAppState extends State<MyApp> {
         padding: const EdgeInsets.only(top: 80),
         child: Stack(
           children: <Widget>[
-            CardScrollWidget(currentPageOffset),
+            new Container(
+              width: width,
+              height: height,
+              child: Stack(
+                children: createList(currentPageOffset, width, height),
+              ),
+            ),
             Positioned.fill(
               child: PageView.builder(
                 itemCount: images.length,
@@ -67,80 +84,54 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
 
-class CardScrollWidget extends StatelessWidget {
-  var currentPageOffset;
+  List<Widget> createList(var currentPageOffset, var width, var height) {
+    var verticalInset = 20.0;
 
-  var padding = 20.0;
-  var verticalInset = 20.0;
+    var widthOfCard = width * 0.7;
 
-  CardScrollWidget(this.currentPageOffset);
+    var primaryCardToLeft = 80;
+    var horizontalInset = 40;
 
-  @override
-  Widget build(BuildContext context) {
-    return new AspectRatio(
-      aspectRatio: widgetAspectRatio,
-      child: LayoutBuilder(builder: (context, contraints) {
-        var width = contraints.maxWidth;
-        var height = contraints.maxHeight;
+    List<Widget> cardList = new List();
 
-//        print('width:${width},height:${height}');
+    for (var i = 0; i < images.length; i++) {
+      var delta = i - currentPageOffset;
 
-        var safeWidth = width - 2 * padding;
-        var safeHeight = height - 2 * padding;
+      bool isOnRight = delta > 0;
 
-        var heightOfPrimaryCard = safeHeight;
-        var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
+      var start = max(
+          primaryCardToLeft - horizontalInset * -delta * (isOnRight ? 15 : 1),
+          0.0);
 
-        var primaryCardLeft = safeWidth - widthOfPrimaryCard;
-        var horizontalInset = primaryCardLeft / 2;
-
-//                print('primaryCardLeft:${primaryCardLeft},horizontalInset:${horizontalInset}');
-
-        List<Widget> cardList = new List();
-
-        for (var i = 0; i < images.length; i++) {
-          var delta = i - currentPageOffset;
-
-//          print('delta:${delta}');
-          bool isOnRight = delta > 0;
-
-          var start = padding +
-              max(
-                  primaryCardLeft -
-                      horizontalInset * -delta * (isOnRight ? 15 : 1),
-                  0.0);
-
-//          print('start:${start}');
-
-          var cardItem = Positioned.directional(
-            top: padding + verticalInset * max(-delta, 0.0),
-            bottom: padding + verticalInset * max(-delta, 0.0),
-            start: start,
-            textDirection: TextDirection.rtl,
-            child: Container(
-              decoration: BoxDecoration(color: Colors.transparent, boxShadow: [
-                BoxShadow(
-                    color: Colors.black26,
-                    offset: Offset(3.0, 6.0),
-                    blurRadius: 10.0)
-              ]),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: AspectRatio(
-                  aspectRatio: cardAspectRatio,
-                  child: Image.asset(images[i], fit: BoxFit.cover),
-                ),
-              ),
+      var cardItem = Positioned.directional(
+        top: verticalInset * max(-delta, 0.0),
+        bottom: verticalInset * max(-delta, 0.0),
+        start: start,
+        textDirection: TextDirection.rtl,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            width: widthOfCard,
+            decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(3.0, 6.0),
+                      blurRadius: 10.0)
+                ]),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Image.asset(images[i], fit: BoxFit.cover),
             ),
-          );
-          cardList.add(cardItem);
-        }
-        return Stack(
-          children: cardList,
-        );
-      }),
-    );
+          ),
+        ),
+      );
+      cardList.add(cardItem);
+    }
+
+    return cardList;
   }
 }
