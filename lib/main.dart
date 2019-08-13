@@ -2,31 +2,19 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-List<String> images = [
-  "assets/image_07.jpg",
-  "assets/image_06.jpg",
-  "assets/image_05.jpg",
-  "assets/image_04.jpg",
-  "assets/image_03.jpg",
-  "assets/image_02.jpg",
-  "assets/image_01.png"
-];
-
 //List<String> images = [
-//  "assets/image_07.jpg",
-//  "assets/image_06.jpg1",
-//  "assets/image_05.jpg1",
-//  "assets/image_04.jpg1",
-//  "assets/image_03.jpg1",
-//  "assets/image_02.jpg1",
-//  "assets/image_01.png1"
+//  "assets/image_1.jpg",
+//  "assets/image_2.jpg",
+//  "assets/image_3.jpg",
+//  "assets/image_4.jpg"
 //];
 
-List<String> titles = [
-  "Hounted Ground",
-  "Fallen In Love",
-  "The Dreaming Moon",
-  "Jack the Persian and the Black Castel",
+List<String> images = [
+  "assets/image_01.jpg",
+  "assets/image_02.jpg",
+  "assets/image_03.jpg",
+  "assets/image_04.jpg",
+  "assets/image_05.jpg",
 ];
 
 void main() => runApp(MaterialApp(
