@@ -21,3 +21,8 @@ samples, guidance on mobile development, and a full API reference.
 ## Screenshot
 
 ![image](https://github.com/ly05010419/CardStack/blob/master/screenshot.png?raw=true)
+
+
+## Thanks
+
+https://www.youtube.com/channel/UC9dwxEAvy-zCMAS7rdox46w
