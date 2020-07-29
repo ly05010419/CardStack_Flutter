@@ -2,13 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-//List<String> images = [
-//  "assets/image_1.jpg",
-//  "assets/image_2.jpg",
-//  "assets/image_3.jpg",
-//  "assets/image_4.jpg"
-//];
-
 List<String> images = [
   "assets/image_01.jpg",
   "assets/image_02.jpg",
@@ -98,7 +91,7 @@ class _MyAppState extends State<MyApp> {
         start: start,
         textDirection: TextDirection.rtl,
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15.0),
           child: Container(
             width: widthOfCard,
             decoration: BoxDecoration(
